@@ -1,0 +1,11 @@
+{
+ "haskell.toolchain" : {
+     "hls" : "2.14.0.0",
+     "cabal" : "3.16.1.0",
+     "stack" : "3.9.3",
+     "ghc" : "9.14.1"
+  },
+  "haskellEnvironment" : {
+    
+  }
+}
