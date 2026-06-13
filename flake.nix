@@ -18,7 +18,7 @@
     devShells.${system}.default = pkgs.mkShell {
       
 
-      buildInputs =  [
+      nativeBuildInputs =  [
         hs.ghc
         pkgs.cabal-install
         pkgs.cabal2nix
