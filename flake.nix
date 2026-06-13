@@ -15,15 +15,16 @@
     hs = pkgs.haskell.packages.ghc914;
   in
   {
-    devShells.${system}.default = hs.shellFor {
-      packages = p: [];
+    devShells.${system}.default = pkgs.mkShell {
+      
 
-      buildInputs = with pkgs; [
-        hs.cabal-install
-        hs.cabal2nix
-        hs.haskell-language-server
-        hs.hlint
-        hs.fourmolu
+      buildInputs =  [
+        hs.ghc
+        pkgs.cabal-install
+        pkgs.cabal2nix
+        pkgs.haskell-language-server
+        pkgs.hlint
+        pkgs.fourmolu
       ];
 
       withHoogle = true;
