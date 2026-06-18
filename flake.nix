@@ -1,5 +1,5 @@
 {
-  description = "Haskell development environment";
+  description = "Haskell dev (GHC + NIX aligned)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -8,26 +8,24 @@
   outputs = { self, nixpkgs }:
   let
     system = "x86_64-linux";
-    pkgs = import nixpkgs {
-      inherit system;
-    };
+    pkgs = import nixpkgs { inherit system; };
 
     hs = pkgs.haskell.packages.ghc914;
+
+    hls = hs.haskell-language-server; 
   in
   {
     devShells.${system}.default = pkgs.mkShell {
-      
-
-      nativeBuildInputs =  [
+      packages = [
         hs.ghc
         pkgs.cabal-install
         pkgs.cabal2nix
-        pkgs.haskell-language-server
+
+        hls   
+
         pkgs.hlint
         pkgs.fourmolu
       ];
-
-      withHoogle = true;
     };
   };
 }
