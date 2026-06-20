@@ -68,6 +68,24 @@
       '';
     };
 
+    fourmolu = pkgs.stdenv.mkDerivation {
+      pname = "fourmolu";
+      version = "0.20.0.0";
+      src = pkgs.fetchurl {
+        url = "https://github.com/fourmolu/fourmolu/releases/download/v0.20.0.0/fourmolu-0.20.0.0-darwin-arm64.zip";
+        hash = "sha256-raI9mgo3DURn5zEPcp/vO/9u5SfTLmK1w36mbmiL89o=";
+      };
+      nativeBuildInputs = [ pkgs.unzip ];
+      dontConfigure = true;
+      dontBuild = true;
+      unpackPhase = "unzip $src";
+      sourceRoot = "fourmolu-0.20.0.0-darwin-arm64";
+      installPhase = ''
+        mkdir -p $out/bin
+        install -m755 fourmolu $out/bin/fourmolu
+      '';
+    };
+
     runtimeLibs = pkgs.lib.makeLibraryPath [
       pkgs.gmp
       pkgs.zlib
@@ -82,8 +100,12 @@
         hs.ghc
         cabal-install
         haskell-language-server
+        hs.cabal2nix
+        pkgs.hlint
+        fourmolu
       ];
 
+      withHoogle = true;
       shellHook = ''
         export DYLD_LIBRARY_PATH="${runtimeLibs}''${DYLD_LIBRARY_PATH:+:$DYLD_LIBRARY_PATH}"
       '';
